@@ -1,43 +1,33 @@
 #include <Arduino.h>
-#include <AccelStepper.h>
+#include <Encoder.h>
+#include "encoder_utils.h"
 
-// Define the pins for step and direction
-#define STEP_PIN 2
-#define DIR_PIN 5
+// Encoder Setup
+#define ENCODER_PIN_A 2 //define pins
+#define ENCODER_PIN_B 3
+Encoder encoder(ENCODER_PIN_A, ENCODER_PIN_B); // Initialize the encoder object
+int pulsePerRev = 2400;  // Encoder specifications
+long encoderZero = 0;  // Variable to store the initial position as zero reference
 
-// Steps per revolution (adjust this according to your motor)
-const int stepsPerRevolution = 200; // For a typical 1.8° stepper motor (200 steps/rev)
-
-// Create an instance of AccelStepper
-AccelStepper stepper(1, STEP_PIN, DIR_PIN);
-
-// Number of rotations
-const int rotations = 10;
-
-// Target position (steps for 10 rotations)
-long targetPosition = rotations * stepsPerRevolution;
-
-// Track whether the motor is moving forward or backward
-bool movingForward = true;
 
 void setup() {
-  // Set the maximum speed and acceleration
-  stepper.setMaxSpeed(1500);    // Steps per second
-  stepper.setAcceleration(6000); // Steps per second squared
 
-  // Start by moving forward
-  stepper.moveTo(targetPosition);
+  // Initialize serial communication
+  Serial.begin(9600);
+  //Serial.println("Rotary Encoder Test with 600 PPR (Pins 2 and 3)");
+  // Set the current position as the zero reference
+  encoderZero = encoder.read();
 }
 
 void loop() {
-  // Move the motor to the target position
-  if (stepper.distanceToGo() == 0) {
-    // When the current movement is complete, switch direction
-    movingForward = !movingForward;
-    targetPosition = movingForward ? rotations * stepsPerRevolution : -rotations * stepsPerRevolution;
-    stepper.moveTo(targetPosition);
-  }
 
-  // Keep the stepper running
-  stepper.run();
+  float position = getEncoderPosition(encoder, encoderZero, pulsePerRev);
+  // Print the position and calculated values
+  //Serial.print("Position: ");
+  //Serial.print(currentPosition);
+  //Serial.print(" | Degrees: ");
+  Serial.println(position, 2);
+  // Small delay for stability
+  delay(50);
+
 }
