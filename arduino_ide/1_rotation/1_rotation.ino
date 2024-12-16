@@ -1,8 +1,8 @@
 #include <AccelStepper.h>
 
 // Define the pins for step and direction
-#define STEP_PIN 2
-#define DIR_PIN 5
+#define STEP_PIN 8
+#define DIR_PIN 9
 
 // Steps per revolution (adjust this according to your motor)
 const int stepsPerRevolution = 200; // For a typical 1.8° stepper motor (200 steps/rev)
@@ -18,8 +18,8 @@ long targetPosition = stepsPerRevolution;
 
 void setup() {
   // Set the maximum speed and acceleration
-  stepper.setMaxSpeed(10000);    // Steps per second
-  stepper.setAcceleration(10000); // Steps per second squared
+  stepper.setMaxSpeed(5000);    // Steps per second
+  stepper.setAcceleration(5000); // Steps per second squared
 
   // Move the motor to the initial target position
   stepper.moveTo(targetPosition);
