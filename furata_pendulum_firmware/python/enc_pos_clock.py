@@ -32,6 +32,7 @@ def update_plot(angle):
     point.set_data(np.radians(angle), 1)  # Update the angle and keep the radius at 1
     plt.draw()  # Redraw the plot
     plt.pause(0.01)  # Pause briefly to update the plot
+    print(angle)
 
 # Collect data and plot in real-time
 print("Collecting data in real-time...")

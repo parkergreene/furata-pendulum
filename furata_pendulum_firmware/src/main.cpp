@@ -33,22 +33,22 @@ void setup() {
 
 
 
-float encoderPrev = getEncoderPosition(encoder, encoderZero, pulsePerRev);
+//float encoderPrev = getEncoderPosition(encoder, encoderZero, pulsePerRev);
 
 void loop() {
   
   float encPosition = getEncoderPosition(encoder, encoderZero, pulsePerRev);
   
-  float encChange = encPosition - encoderPrev;
+  //float encChange = encPosition - encoderPrev;
 
-  float move = degsToSteps(encChange, stepsPerRevolution);
+  //float move = degsToSteps(encChange, stepsPerRevolution);
 
-  Serial.println(encChange, 2);
+  Serial.println(encPosition, 2);
 
-  stepper.move(move);
-  stepper.run();
+  //stepper.move(move);
+  //stepper.run();
 
-  encoderPrev = encPosition;
+  //encoderPrev = encPosition;
   //Serial.println(encPosition, 2);
   // Small delay for stability
   //delay(50);
